@@ -1,0 +1,7 @@
+FROM mysql:5.7.32
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./mysql-bootstrap.sh /mysql/mysql-bootstrap.sh
+COPY ./fbc-license-db.sql /mysql/fbc-license-db.sql
+
+CMD ["bash", "/bootstrap.sh", "--run", "/mysql/mysql-bootstrap.sh", "--role", "mysql.npool.top"]
