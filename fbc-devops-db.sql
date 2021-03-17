@@ -40,6 +40,8 @@ CREATE TABLE if not exists `device_table_config` (
   `maintaining` boolean NULL DEFAULT false COMMENT '設備是否處於維護狀態',
   `offline` boolean NULL DEFAULT false COMMENT '設備是否處於離線狀態',
   `updating` boolean NULL DEFAULT false COMMENT '設備是否處於更新設置狀態',
+  `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  `modify_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
