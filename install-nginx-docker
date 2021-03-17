@@ -1,0 +1,68 @@
+#!/bin/bash
+
+function info() {
+  echo "  <I> $1 ~"
+}
+
+function install_nginx() {
+nginx_status=`systemctl status nginx | grep "Active" | awk -F "[: ]+" '{print $3}'`
+
+if [ "$nginx_status" == "active" ]; then
+  info "nginx is running"
+  systemctl enable nginx
+elif [ "$nginx_status" == "inactive" ]; then
+  systemctl start nginx
+  [ "$nginx_status" == "active" ] && info "nginx is running"
+    systemctl enable nginx
+else
+#  apt-get update
+#  apt-get install nginx -y
+  nginx_repo=/etc/yum.repos.d/nginx.repo
+  echo "[nginx]"								>  $nginx_repo
+  echo "name=nginx repo"							>> $nginx_repo
+  echo "baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/"	>> $nginx_repo
+  echo "gpgcheck=0"								>> $nginx_repo
+  echo "enabled=1"								>> $nginx_repo
+    
+  yum install nginx -y
+  systemctl start nginx
+  systemctl enable nginx
+fi
+
+sed -i '/^user/c user  root;' /etc/nginx/nginx.conf
+nginx -s reload
+}
+
+function install_docker() {
+docker_status=`systemctl status docker | grep "Active" | awk -F "[: ]+" '{print $3}'`
+
+if [ "$docker_status" == "active" ]; then
+  info "docker is running"
+  systemctl enable docker
+elif [ "$docker_status" == "inactive" ]; then
+  systemctl start docker
+  [ "$docker_status" == "active" ] && info "docker is running"
+  systemctl enable docker
+else
+  curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+#  curl -sSL https://get.daocloud.io/docker | sh
+  systemctl start docker
+  systemctl enable docker
+fi
+docker network create --subnet=172.172.0.0/16 dockernet
+yum install docker-compose -y
+}
+
+function docker_daemon_json() {
+  daemon=/etc/docker/daemon.json
+  echo "{"                                                  >  $daemon
+  echo "  \"insecure-registries\": [\"106.74.7.3:55214\"]"  >> $daemon
+  echo "}"                                                  >> $daemon
+
+  systemctl daemon-reload
+  systemctl restart docker
+}
+
+install_nginx
+install_docker
+docker_daemon_json
