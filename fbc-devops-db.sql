@@ -45,17 +45,4 @@ CREATE TABLE if not exists `device_table_config` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for device_table_runtime
--- ----------------------------
-CREATE TABLE if not exists `device_table_runtime` (
-  `id` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'uuid',
-  `nvme_count` int(10) NULL DEFAULT NULL COMMENT '運行時Nvme數量',
-  `gpu_count` int(10) NULL DEFAULT NULL COMMENT '運行時Gpu數量',
-  `memory_count` int(10) NULL DEFAULT NULL COMMENT '運行時內存條數',
-  `memory_size` int(10) NULL DEFAULT NULL COMMENT '運行時內存總量',
-  `report_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
 SET FOREIGN_KEY_CHECKS = 1;
