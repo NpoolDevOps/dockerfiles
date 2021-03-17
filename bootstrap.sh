@@ -37,6 +37,7 @@ if [ ! -f .bootstrapped ]; then
     apt clean
     apt update >> $LOG_FILE
     apt install git -y >> $LOG_FILE
+    apt install vim -y >> $LOG_FILE
     apt install wget -y >> $LOG_FILE
   else
     yum install git -y
@@ -49,7 +50,9 @@ if [ ! -f .bootstrapped ]; then
   mv /tmp/etcd-v3.4.14-linux-amd64/etcdctl /usr/bin
 fi
 
-oldrev=`cat .bootstrapped`
+if [ -f .bootstrapped ]; then
+  oldrev=`cat .bootstrapped`
+fi
 
 if [ "x$oldrev" != "x$REVISION" ]; then
   if [ "x$GITREPO" != "x" ]; then

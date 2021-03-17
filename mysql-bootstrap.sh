@@ -1,9 +1,10 @@
 #!/bin/bash
 
 mkdir -p /home/mysql
-service mysql start
 
-etcdctl --endpoints=etcd.npool.top:2379 put root/mysql.npool.top "{\"host\":\"172.172.0.10\",\"user\":\"root\",\"passwd\":\"123456\"}"
+etcdctl --endpoints=$ETCD_HOSTS put root/mysql.npool.top "{\"host\":\"172.172.0.10\",\"user\":\"root\",\"passwd\":\"123456\"}"
+
+docker-entrypoint.sh mysqld &
 
 mysql -uroot -p123456 <<EOF
 source /mysql/fbc-license-db.sql;
