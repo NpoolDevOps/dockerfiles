@@ -30,7 +30,7 @@ CREATE TABLE if not exists `device_table_config` (
   `nvme_desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的Nvme描述',
   `gpu_count` int(8) NULL DEFAULT NULL COMMENT '設備的Gpu數量',
   `gpu_desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的Gpu描述',
-  `memory_size` int(32) NULL DEFAULT NULL COMMENT '設備的內存總大小',
+  `memory_size` bigint(64) NULL DEFAULT NULL COMMENT '設備的內存總大小',
   `memory_count` int(8) NULL DEFAULT NULL COMMENT '設備的內存條數',
   `memory_desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的內存描述',
   `cpu_count` int(8) NULL DEFAULT NULL COMMENT '設備的Cpu數量',
