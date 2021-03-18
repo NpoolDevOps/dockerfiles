@@ -1,6 +1,6 @@
 #!/bin/bash
 
-etcdctl --endpoints=$ETCD_HOSTS put root/redis.npool.top "{\"host\":\"172.172.0.11\"}"
+etcdctl --endpoints=$ENTROPY_ETCD_HOSTS put root/redis.npool.top "{\"host\":\"$EMTROPY_REDIS_HOST\"}"
 
 docker-entrypoint.sh redis-server
 
