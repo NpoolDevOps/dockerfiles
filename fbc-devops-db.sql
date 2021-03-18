@@ -20,11 +20,11 @@ create database if not exists `fbc_devops_db`; SET character_set_client = utf8; 
 -- ----------------------------
 -- Table structure for device_table_config
 -- ----------------------------
-CREATE TABLE if not exists `device_table_config` (
+CREATE TABLE if not exists `device_config` (
   `id` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `spec` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '本機SPEC',
   `parent_spec` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '父設備SPEC',
-  `role` varchar(16) NULL DEFAULT 0 COMMENT '角色: fullnode, miner, worker, storage',
+  `role` varchar(16) NULL DEFAULT 0 COMMENT '角色: fullnode, miner, worker, storage, fullminer',
   `sub_role` varchar(16) NULL DEFAULT 0 COMMENT '子角色: wallet, accounting, mds, mgr, osd',
   `owner` varchar(32) NULL DEFAULT 0 COMMENT '設備所有者',
   `current_user` varchar(32) NULL DEFAULT 0 COMMENT '設備使用者',
@@ -47,5 +47,20 @@ CREATE TABLE if not exists `device_table_config` (
   `modify_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for device_role
+-- ----------------------------
+CREATE TABLE if not exists `device_role`  (
+  `id` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'uuid',
+  `role_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '状态名称',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+REPLACE INTO device_role (id, role_name) VALUES(1, 'fullnode');
+REPLACE INTO device_role (id, role_name) VALUES(2, 'miner');
+REPLACE INTO device_role (id, role_name) VALUES(3, 'fullminer');
+REPLACE INTO device_role (id, role_name) VALUES(4, 'worker');
+REPLACE INTO device_role (id, role_name) VALUES(5, 'storage');
 
 SET FOREIGN_KEY_CHECKS = 1;
