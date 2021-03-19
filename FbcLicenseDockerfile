@@ -8,4 +8,4 @@ RUN yum install go -y
 ARG ALL_PROXY
 ENV ALL_PROXY=$ALL_PROXY
 
-ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/fbc-license-bootstrap.sh", "--role", "license.npool.top", "--rev", "master", "--config", "fbc-license-service.conf", "--repo", "https://github.com/NpoolDevOps/fbc-license-service.git"]
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/fbc-license-bootstrap.sh", "--role", "license.npool.top", "--rev", "main", "--config", "fbc-license-service.conf", "--repo", "https://github.com/NpoolDevOps/fbc-license-service.git"]
