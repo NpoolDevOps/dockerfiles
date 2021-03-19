@@ -42,7 +42,6 @@ CREATE TABLE if not exists `device_config` (
   `hdd_desc` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的Hdd描述',
   `maintaining` boolean NULL DEFAULT false COMMENT '設備是否處於維護狀態',
   `offline` boolean NULL DEFAULT false COMMENT '設備是否處於離線狀態',
-  `updating` boolean NULL DEFAULT false COMMENT '設備是否處於更新設置狀態',
   `create_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `modify_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
