@@ -28,22 +28,22 @@ echo "Check parameters" >> $LOG_FILE
 [ "x$ROLE" == "x" ] && usage $0
 
 echo "Install git ..." >> $LOG_FILE
-cat /etc/issue | grep "Debian"
 
 if [ ! -f .bootstrapped ]; then
+  cat /etc/issue | grep "Debian"
   if [ $? -eq 0 ]; then
     sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
     sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-    apt clean
-    apt update >> $LOG_FILE
-    apt install git -y >> $LOG_FILE
-    apt install vim -y >> $LOG_FILE
-    apt install wget -y >> $LOG_FILE
+    apt-get clean
+    apt-get update >> $LOG_FILE
+    apt-get install git -y >> $LOG_FILE
+    apt-get install vim -y >> $LOG_FILE
+    apt-get install wget -y >> $LOG_FILE
   else
     yum install git -y
+    yum install vim -y
     yum install wget -y
   fi
-
   echo "Install etcdctl ..." >> $LOG_FILE
   wget http://106.14.125.55:8888/etcd-v3.4.14-linux-amd64.tar.gz -O /tmp/etcd-v3.4.14-linux-amd64.tar.gz
   tar xf /tmp/etcd-v3.4.14-linux-amd64.tar.gz -C /tmp
@@ -54,6 +54,7 @@ if [ -f .bootstrapped ]; then
   oldrev=`cat .bootstrapped`
 fi
 
+echo "Clone $GITREPO/$REVISION ..." >> $LOG_FILE
 if [ "x$oldrev" != "x$REVISION" ]; then
   if [ "x$GITREPO" != "x" ]; then
     echo "Clone $GITREPO ..." >> $LOG_FILE
@@ -69,15 +70,16 @@ if [ "x$oldrev" != "x$REVISION" ]; then
       git checkout $REVISION
       cd -
     fi
-    [ ! $? -eq 0 ] && echo "cannot clone $GITREPO" && exit 1
+    [ ! $? -eq 0 ] && echo "cannot clone $GITREPO" >> $LOG_FILE && exit 2
   fi
 fi
 
-[ ! -f "$RUNSCRIPT" ] && echo "$RUNSCRIPT is not exist in" >> $LOG_FILE && exit 1
+[ ! -f "$RUNSCRIPT" ] && echo "$RUNSCRIPT is not exist in" >> $LOG_FILE && exit 3
 
+echo "Run $RUNSCRIPT ..." >> $LOG_FILE
 chmod a+x $RUNSCRIPT
-$RUNSCRIPT --role $ROLE >> $LOG_FILE
-[ ! $? -eq 0 ] && echo "fail to run $RUNSCRIPT" && exit 1
+$RUNSCRIPT --role $ROLE >> $LOG_FILE 2>&1
+[ ! $? -eq 0 ] && echo "fail to run $RUNSCRIPT" >> $LOG_FILE && exit 4
 
 echo $REVISION > .bootstrapped
 

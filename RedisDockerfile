@@ -3,7 +3,4 @@ FROM 621ceef7494a
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./redis-bootstrap.sh /redis-bootstrap.sh
 
-ENV REDIS_HOST redis.npool.top
-
-# CMD ["bash", "/bootstrap.sh", "--run", "/redis-bootstrap.sh", "--role", "redis.npool.top"]
 ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/redis-bootstrap.sh", "--role", "redis.npool.top"]
