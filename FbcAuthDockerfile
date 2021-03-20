@@ -5,6 +5,11 @@ COPY ./fbc-auth-bootstrap.sh /fbc-auth-bootstrap.sh
 
 RUN yum install go -y
 
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
 ARG ALL_PROXY
 ENV ALL_PROXY=$ALL_PROXY
 
