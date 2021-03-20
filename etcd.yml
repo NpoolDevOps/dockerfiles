@@ -25,8 +25,9 @@ services:
       - "ETCD_INITIAL_CLUSTER=node1=http://0.0.0.0:2380"
       - "ETCD_NAME=node1"
       - "ETCD_DATA_DIR=/opt/bitnami/etcd/data"
-    #networks:
-    #  - dockernet 
+    networks:
+      default:
+        ipv4_address: "172.172.0.2"
 
 networks:
   default:
