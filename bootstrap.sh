@@ -6,10 +6,11 @@ echo "Get command parameter" > $LOG_FILE
 
 while [ ! $# -eq 0 ]; do
   case "$1" in
-    --repo) GITREPO="$2"; shift 2 ;;
-    --rev)  REVISION="$2"; shift 2 ;;
-    --run)  RUNSCRIPT="$2"; shift 2 ;;
-    --role) ROLE="$2"; shift 2 ;;
+    --repo)   GITREPO="$2"; shift 2 ;;
+    --rev)    REVISION="$2"; shift 2 ;;
+    --run)    RUNSCRIPT="$2"; shift 2 ;;
+    --role)   ROLE="$2"; shift 2 ;;
+    --config) CONFIG="$2"; shift 2 ;;
   esac
 done
 
@@ -40,9 +41,9 @@ if [ ! -f .bootstrapped ]; then
     apt-get install vim -y >> $LOG_FILE
     apt-get install wget -y >> $LOG_FILE
   else
-    yum install git -y
-    yum install vim -y
-    yum install wget -y
+    yum install git -y >> $LOG_FILE
+    yum install vim -y >> $LOG_FILE
+    yum install wget -y >> $LOG_FILE
   fi
   echo "Install etcdctl ..." >> $LOG_FILE
   wget http://106.14.125.55:8888/etcd-v3.4.14-linux-amd64.tar.gz -O /tmp/etcd-v3.4.14-linux-amd64.tar.gz
@@ -55,6 +56,7 @@ if [ -f .bootstrapped ]; then
 fi
 
 echo "Clone $GITREPO/$REVISION ..." >> $LOG_FILE
+
 if [ "x$oldrev" != "x$REVISION" ]; then
   if [ "x$GITREPO" != "x" ]; then
     echo "Clone $GITREPO ..." >> $LOG_FILE
@@ -78,7 +80,7 @@ fi
 
 echo "Run $RUNSCRIPT ..." >> $LOG_FILE
 chmod a+x $RUNSCRIPT
-$RUNSCRIPT --role $ROLE >> $LOG_FILE 2>&1
+$RUNSCRIPT --role $ROLE --config $CONFIG >> $LOG_FILE 2>&1
 [ ! $? -eq 0 ] && echo "fail to run $RUNSCRIPT" >> $LOG_FILE && exit 4
 
 echo $REVISION > .bootstrapped

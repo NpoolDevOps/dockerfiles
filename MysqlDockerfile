@@ -2,6 +2,8 @@ FROM mysql:5.7.32
 
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./mysql-bootstrap.sh /mysql/mysql-bootstrap.sh
+COPY ./fbc-devops-db.sql /mysql/fbc-devops-db.sql
 COPY ./fbc-license-db.sql /mysql/fbc-license-db.sql
+COPY ./fbc-userauth-db.sql /mysql/fbc-userauth-db.sql
 
 ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/mysql/mysql-bootstrap.sh", "--role", "mysql.npool.top"]

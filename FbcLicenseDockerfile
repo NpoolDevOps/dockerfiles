@@ -1,0 +1,16 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./fbc-license-bootstrap.sh /fbc-license-bootstrap.sh
+
+RUN yum install go -y
+
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/fbc-license-bootstrap.sh", "--role", "license.npool.top", "--rev", "main", "--config", "fbc-license-service.conf", "--repo", "https://github.com/NpoolDevOps/fbc-license-service.git"]

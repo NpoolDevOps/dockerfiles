@@ -10,4 +10,6 @@ docker-entrypoint.sh mysqld &
 sleep 10
 
 mysql -uroot -p123456 <<EOF
+source /mysql/fbc-devops-db.sql;
 source /mysql/fbc-license-db.sql;
+source /mysql/fbc-userauth-db.sql;
