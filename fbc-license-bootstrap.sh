@@ -8,4 +8,4 @@ sed -i s/\"port\".*/\"port\":\ $PORT/g  /my-repo/fbc-license-service.conf
 cd /my-repo/
 export GOPROXY=https://goproxy.cn
 go build
-./fbc-license-service
+./fbc-license-service >> /tmp/fbc-license.log 2>&1

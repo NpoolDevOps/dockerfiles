@@ -2,5 +2,5 @@
 
 etcdctl --endpoints=$ENTROPY_ETCD_HOSTS put root/redis.npool.top "{\"host\":\"$ENTROPY_REDIS_HOST\"}"
 
-docker-entrypoint.sh redis-server
+docker-entrypoint.sh redis-server >> /tmp/redis.log 2>&1
 
