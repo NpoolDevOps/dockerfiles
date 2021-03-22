@@ -40,4 +40,16 @@ CREATE TABLE if not exists `app_id` (
 REPLACE INTO app_id (id, user_id) VALUES('00000000-0000-0000-0000-000000000000', 'f959f4b2-8880-11eb-b703-0242acac000a');
 REPLACE INTO app_id (id, user_id) VALUES('00000001-0001-0001-0001-000000000001', 'f959f4b2-8880-11eb-b703-0242acac000a');
 
+
+-- ----------------------------
+-- Table structure for super_user
+-- ----------------------------
+CREATE TABLE if not exists `super_user` (
+  `id` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用戶ID',
+  `visitor` boolean NULL DEFAULT false COMMENT '用戶身份爲訪客',
+  PRIMARY KEY (`id`) USING BTREE
+} ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+REPLACE INTO super_id (id, visitor) VALUES('f959f4b2-8880-11eb-b703-0242acac000a', false);
+
 SET FOREIGN_KEY_CHECKS = 1;
