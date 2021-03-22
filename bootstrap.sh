@@ -43,6 +43,7 @@ if [ ! -f .bootstrapped ]; then
   else
     yum install git -y >> $LOG_FILE
     yum install vim -y >> $LOG_FILE
+    yum install net-tools -y >> $LOG_FILE
     yum install wget -y >> $LOG_FILE
   fi
   echo "Install etcdctl ..." >> $LOG_FILE
@@ -67,8 +68,7 @@ if [ "x$oldrev" != "x$REVISION" ]; then
       cd -
     else
       cd my-repo
-      git checkout master
-      git pull
+      git pull origin
       git checkout $REVISION
       cd -
     fi
@@ -76,15 +76,13 @@ if [ "x$oldrev" != "x$REVISION" ]; then
   fi
 fi
 
+echo $REVISION > .bootstrapped
+
 [ ! -f "$RUNSCRIPT" ] && echo "$RUNSCRIPT is not exist in" >> $LOG_FILE && exit 3
 
 echo "Run $RUNSCRIPT ..." >> $LOG_FILE
 chmod a+x $RUNSCRIPT
-$RUNSCRIPT --role $ROLE --config $CONFIG >> $LOG_FILE 2>&1
+$RUNSCRIPT --role $ROLE --config $CONFIG
 [ ! $? -eq 0 ] && echo "fail to run $RUNSCRIPT" >> $LOG_FILE && exit 4
-
-echo $REVISION > .bootstrapped
-
-while true; do sleep 1000; done
 
 exit 0

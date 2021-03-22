@@ -7,4 +7,4 @@ sed -i s/\"port\".*/\"port\":\ $PORT/g  /my-repo/fbc-auth-service.conf
 cd /my-repo/
 export GOPROXY=https://goproxy.cn
 go build
-./fbc-auth-service
+./fbc-auth-service >> /tmp/fbc-auth.log 2>&1
