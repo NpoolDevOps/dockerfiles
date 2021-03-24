@@ -67,8 +67,9 @@ if [ "x$oldrev" != "x$REVISION" ]; then
       git checkout $REVISION
       cd -
     else
+      rm -rf my-repo
+      git clone $GITREPO my-repo
       cd my-repo
-      git pull origin
       git checkout $REVISION
       cd -
     fi
