@@ -1,0 +1,16 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./fbc-devops-bootstrap.sh /fbc-devops-bootstrap.sh
+
+RUN yum install go -y
+
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/fbc-devops-bootstrap.sh", "--role", "devops.npool.top", "--rev", "master", "--config", "fbc-devops-service.conf", "--repo", "https://github.com/NpoolDevOps/fbc-devops-service.git"]
