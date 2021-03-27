@@ -52,5 +52,6 @@ CREATE TABLE if not exists `super_user` (
 } ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 REPLACE INTO super_id (id, visitor) VALUES('f959f4b2-8880-11eb-b703-0242acac000a', false);
+REPLACE INTO super_id (id, visitor) VALUES('f5a236f5-95fa-4dc0-9422-f7e9226366a0', true);
 
 SET FOREIGN_KEY_CHECKS = 1;
