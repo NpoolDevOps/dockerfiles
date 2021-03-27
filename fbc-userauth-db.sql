@@ -39,6 +39,7 @@ CREATE TABLE if not exists `app_id` (
 
 REPLACE INTO app_id (id, user_id) VALUES('00000000-0000-0000-0000-000000000000', 'f959f4b2-8880-11eb-b703-0242acac000a');
 REPLACE INTO app_id (id, user_id) VALUES('00000001-0001-0001-0001-000000000001', 'f959f4b2-8880-11eb-b703-0242acac000a');
+REPLACE INTO app_id (id, user_id) VALUES('00000002-0002-0002-0002-000000000002', 'f959f4b2-8880-11eb-b703-0242acac000a');
 
 
 -- ----------------------------
