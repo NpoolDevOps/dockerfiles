@@ -47,7 +47,8 @@ REPLACE INTO app_id (id, user_id) VALUES('00000002-0002-0002-0002-000000000002',
 -- ----------------------------
 CREATE TABLE if not exists `super_user` (
   `id` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT '用戶ID',
-  `visitor` boolean NULL DEFAULT false COMMENT '用戶身份爲訪客',
+  `visitor_only` boolean NULL DEFAULT false COMMENT '用戶身份爲訪客',
+  `visitor` varchar(1024) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '',
   PRIMARY KEY (`id`) USING BTREE
 } ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
