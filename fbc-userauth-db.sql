@@ -52,7 +52,7 @@ CREATE TABLE if not exists `super_user` (
   PRIMARY KEY (`id`) USING BTREE
 } ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
-REPLACE INTO super_id (id, visitor) VALUES('f959f4b2-8880-11eb-b703-0242acac000a', false);
-REPLACE INTO super_id (id, visitor) VALUES('dc159447-6fb2-4f58-bfb3-0ecedad78c5e', true);
+REPLACE INTO super_id (id, visitor_only, visitor) VALUES('f959f4b2-8880-11eb-b703-0242acac000a', false, 'dc159447-6fb2-4f58-bfb3-0ecedad78c5e');
+REPLACE INTO super_id (id, visitor_only, visitor) VALUES('dc159447-6fb2-4f58-bfb3-0ecedad78c5e', true, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
