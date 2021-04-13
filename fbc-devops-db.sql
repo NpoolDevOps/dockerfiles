@@ -40,6 +40,8 @@ CREATE TABLE if not exists `device_config` (
   `cpu_desc` varchar(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的Cpu描述',
   `hdd_count` int(8) NULL DEFAULT NULL COMMENT '設備的Hdd數量',
   `hdd_desc` varchar(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的Hdd描述',
+  `ethernet_count` int(8) NULL DEFAULT NULL COMMENT '設備的網卡數量',
+  `ethernet_desc` varchar(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的網卡描述',
   `os_spec` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL COMMENT '設備的操作系統描述',
   `maintaining` boolean NULL DEFAULT false COMMENT '設備是否處於維護狀態',
   `offline` boolean NULL DEFAULT false COMMENT '設備是否處於離線狀態',
@@ -62,5 +64,6 @@ REPLACE INTO device_role (id, role_name) VALUES(2, 'miner');
 REPLACE INTO device_role (id, role_name) VALUES(3, 'fullminer');
 REPLACE INTO device_role (id, role_name) VALUES(4, 'worker');
 REPLACE INTO device_role (id, role_name) VALUES(5, 'storage');
+REPLACE INTO device_role (id, role_name) VALUES(6, 'gateway');
 
 SET FOREIGN_KEY_CHECKS = 1;
