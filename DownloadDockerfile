@@ -1,0 +1,8 @@
+FROM nginx
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./download-bootstrap.sh /nginx/download-bootstrap.sh
+COPY ./tars.lst /nginx/tars.lst
+COPY ./download.conf /etc/nginx/conf.d/nginx.conf
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/nginx/download-bootstrap.sh", "--role", "download.npool.top"]
