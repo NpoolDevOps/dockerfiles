@@ -1,0 +1,34 @@
+global:
+  resolve_timeout: 15s
+  wechat_api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+  wechat_api_corp_id: 'xxxxxx'
+  wechat_api_secret: 'xxxxxx'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'wechat'
+
+receivers:
+- name: 'wechat'
+  wechat_configs:
+    - send_resolved: true
+      to_party: '2'
+      agent_id: '1000002'
+      corp_id: 'xxxxxx'
+      to_user: '@all'
+      api_url: 'https://qyapi.weixin.qq.com/cgi-bin/'
+      api_secret: 'xxxxxx'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
+    
+templates:
+- /usr/local/alertmanager/alert-template.tmp1
+

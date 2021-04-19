@@ -1,0 +1,9 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./prometheus-bootstrap.sh /prometheus-bootstrap.sh
+COPY ./alert-rules.yml /alert-rules.yml
+COPY ./alertmanager.yml /alertmanager.yml
+COPY ./alert-template.tmp1 /alert-template.tmp1
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/prometheus-bootstrap.sh", "--role", "prometheus.npool.top"]

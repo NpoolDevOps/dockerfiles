@@ -2,6 +2,7 @@
 https://github.com/prometheus/prometheus/releases/download/v2.20.1/prometheus-2.20.1.linux-amd64.tar.gz           download        8fb248b579b8b9a88dd9b1686f7f68db7071960a45b28619145d3a4037375dcb
 # https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz       download        3369b76cd2b0ba678b6d618deab320e565c3d93ccb5c2a0d5db51a53857768ae
 https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-amd64.tar.gz       download        9ccd863937436fd6bfe650e22521a7f2e6a727540988eef515dde208f9aef232
-https://dl.grafana.com/oss/release/grafana_7.1.3_amd64.deb                                                        download        0d41f30d1b2fec1b2613d24ff28d159ed4e05fe591d735a7a201c78361c2a8bc
+https://dl.grafana.com/oss/release/grafana-7.5.4.linux-amd64.tar.gz                                               download        b37757e4b2a9b82098a9ad5a36ccb2a37c4d8f5c4264c622823a20ba6547acf9
+# https://dl.grafana.com/oss/release/grafana_7.1.3_amd64.deb                                                        download        0d41f30d1b2fec1b2613d24ff28d159ed4e05fe591d735a7a201c78361c2a8bc
 # http://106.14.125.55:8888/datacenter-gpu-manager_2.0.10_amd64.deb                                                 download        c32f2758611cc4e4e2ae69372a350bf14733d92b9cb5963ada9df0ee0aa63b76
 # https://github.com/ncabatoff/process-exporter/releases/download/v0.5.0/process-exporter-0.5.0.linux-amd64.tar.gz  download        1b422f5f26ebefc0928b56fbefc08d0aab3cc7a636627d7d57b200af84e91bb9

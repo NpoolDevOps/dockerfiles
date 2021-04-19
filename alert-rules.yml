@@ -1,0 +1,75 @@
+groups:
+- name: UP
+  rules:
+#  - alert: node
+#    expr: up{job="node"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Node has been down for more than 1 minutes."
+#      summary: "Node down"
+#  - alert: miner
+#    expr: up{job="miner"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Miner has been down for more than 1 minutes."
+#      summary: "Miner down"
+#  - alert: gpu
+#    expr: up{job="gpu_metrics"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Gpu has been down for more than 1 minutes."
+#      summary: "Gpu down"
+#  - alert: process
+#    expr: namedprocess_namegroup_num_procs{job="process"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Process exporter has been down for more than 1 minutes."
+#      summary: "Process exporter down"
+#  - alert: miner process
+#    expr: namedprocess_namegroup_num_procs{job="miner"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Miner process exporter has been down for more than 1 minutes."
+#      summary: "Miner process exporter down"
+#  - alert: ceph
+#    expr: up{job="ceph_cluster"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Ceph has been down for more than 1 minutes."
+#      summary: "Ceph down"
+#  - alert: ceph osd
+#    expr: ceph_osd_up{job="ceph_cluster"} == 0
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Ceph osd has been down for more than 1 minutes."
+#      summary: "Ceph osd down"
+#  - alert: ping
+#    expr: ping{exported_job="packetloss"} >= 5
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Network packet loss exceeds 5%"
+#      summary: "packet loss"
+#  - alert: ping
+#    expr: ping{exported_job="networkdelay"} >= 5
+#    for: 15s
+#    labels:
+#    severity: critical
+#    annotations:
+#      description: "Network delay exceeds 5ms"
+#      summary: "network dalay"
