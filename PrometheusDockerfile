@@ -3,7 +3,10 @@ FROM centos
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./prometheus-bootstrap.sh /prometheus-bootstrap.sh
 COPY ./alert-rules.yml /alert-rules.yml
-COPY ./alertmanager.yml /alertmanager.yml
-COPY ./alert-template.tmp1 /alert-template.tmp1
+
+RUN yum install go -y
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
 
 ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/prometheus-bootstrap.sh", "--role", "prometheus.npool.top"]
