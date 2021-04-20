@@ -48,6 +48,6 @@ function install_grafana_service() {
 
 
 install_grafana_service
-cd /usr/local/grafana/bin
-./graifana-serve >> $LOG_FILE 2>&1 &
-
+cd /usr/local/grafana/bin/
+./grafana-server >> $LOG_FILE 2>&1 &
+sleep 99999999999999999999999999

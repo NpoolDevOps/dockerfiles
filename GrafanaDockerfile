@@ -3,4 +3,4 @@ FROM centos
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./grafana-bootstrap.sh /grafana-bootstrap.sh
 
-ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/grafana-bootstrap.sh", "--role", "grafana.npool.top"]
+ENTRYPOINT ["/bin/bash", "/bootstrap.sh", "--run", "/grafana-bootstrap.sh", "--role", "grafana.npool.top"]
