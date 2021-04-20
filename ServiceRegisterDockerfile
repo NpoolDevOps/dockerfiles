@@ -1,0 +1,16 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./service-register-bootstrap.sh /service-register-bootstrap.sh
+
+RUN yum install go -y
+
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/service-register-bootstrap.sh", "--role", "register.npool.top", "--rev", "master", "--config", "service-register.conf", "--repo", "https://github.com/NpoolAccounting/service-register.git"]
