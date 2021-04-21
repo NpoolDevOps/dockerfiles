@@ -110,5 +110,7 @@ install_prometheus_service
 install_idc_devops
 
 sleep 30
+ALL_PROXY= curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d '{"UserName":"$USERNAME", "Password":"$PASSWORD", "DomainName":"prometheus-peer.npool.top", "IP":"$PUBLIC_IP", "Port":"$PUBLIC_PORT"}' --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure
+
 $prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1
 
