@@ -56,13 +56,14 @@ function install_prometheus_service() {
     ALL_PROXY= reliable_download  http://$DOWNLOAD_IMG_HOST/$protar $ENV_WORKSPACE/$protar
     sum=`sha256sum $ENV_WORKSPACE/$protar`
   fi
-  info "Install prometheus..." >> $PRO_LOG_FILE
+  info "Untar prometheus..." >> $PRO_LOG_FILE
   cd $ENV_WORKSPACE
   tar xf $protar >> $PRO_LOG_FILE
   mkdir -p $prodir
   cp -r $prover.linux-amd64/* $prodir/
   mkdir -p $prodir/rules
   mv /alert-rules.yml $prodir/rules/
+  info "done..." >> $PRO_LOG_FILE
 }
 
 function install_devops_peer() {
@@ -84,13 +85,10 @@ function install_devops_peer() {
     error "CANNOT clone $FBC_DEVOPS" >> $DEVOPS_LOG_FILE
   else
     cd $ENV_WORKSPACE/$FBC_DEVOPS
+    info "go build..." >> $DEVOPS_LOG_FILE
     export GOPROXY=https://goproxy.cn
     go build
-    if [ ! 0 -eq $? ]; then
-      install_go
-      export GOPROXY=https://goproxy.cn
-      go build
-    fi
+    info "go build done" >> $DEVOPS_LOG_FILE
   fi
 }
 
@@ -101,6 +99,7 @@ function install_idc_devops() {
     info "install devops peer" >> $DEVOPS_LOG_FILE
     install_devops_peer
     cd $ENV_WORKSPACE/$FBC_DEVOPS
+    info "Run devops peer..."
     ./$FBC_DEVOPS --main-role=gateway --network-type=filecoin --username=$USERNAME --password=$PASSWORD --test-mode=true --snmp-monitor=true --snmp-user=$SNMP_USER --snmp-pass=$SNMP_PASS --snmp-target=$SNMP_TARGET --snmp-community=$SNMP_COMMUNITY --location-label=$LABLE --mon-address=$IP >> $DEVOPS_LOG_FILE 2>&1 &
   fi
 }
@@ -109,8 +108,13 @@ function install_idc_devops() {
 install_prometheus_service
 install_idc_devops
 
+info "sleep..." >> $DEVOPS_LOG_FILE
 sleep 30
-ALL_PROXY= curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d '{"UserName":"$USERNAME", "Password":"$PASSWORD", "DomainName":"prometheus-peer.npool.top", "IP":"$PUBLIC_IP", "Port":"$PUBLIC_PORT"}' --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure
 
+info "Post prometheus-peer.npool.top..." >> $PRO_LOG_FILE
+ALL_PROXY= curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure
+echo curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure >> $PRO_LOG_FILE
+
+info "Run prometheus..." >> $PRO_LOG_FILE
 $prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1
 
