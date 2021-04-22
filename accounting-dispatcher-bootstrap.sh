@@ -7,4 +7,4 @@ sed -i s/\"port\".*/\"port\":\ $PORT/g  /my-repo/accounting-dispatcher.conf
 cd /my-repo/
 export GOPROXY=https://goproxy.cn
 go build
-./service-register >> /tmp/accounting-dispatcher.log 2>&1
+./accounting-dispatcher >> /tmp/accounting-dispatcher.log 2>&1
