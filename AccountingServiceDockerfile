@@ -1,0 +1,16 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./accounting-service-bootstrap.sh /accounting-service-bootstrap.sh
+
+RUN yum install go -y
+
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/accounting-service-bootstrap.sh","--role", "account.npool.top", "--rev", "master", "--config", "fbc-accounting-service.conf", "--repo", "https://github.com/EntropyPool/fbc-accounting-service"]
