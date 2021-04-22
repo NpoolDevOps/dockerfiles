@@ -3,6 +3,7 @@ FROM centos
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./prometheus-bootstrap.sh /prometheus-bootstrap.sh
 COPY ./alert-rules.yml /alert-rules.yml
+COPY ./prometheus.yml /prometheus.yml
 
 RUN yum install go -y
 

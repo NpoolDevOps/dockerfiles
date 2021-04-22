@@ -99,21 +99,27 @@ function install_idc_devops() {
     info "install devops peer" >> $DEVOPS_LOG_FILE
     install_devops_peer
     cd $ENV_WORKSPACE/$FBC_DEVOPS
-    info "Run devops peer..."
+    info "Run devops peer..." >> $DEVOPS_LOG_FILE
     ./$FBC_DEVOPS --main-role=gateway --network-type=filecoin --username=$USERNAME --password=$PASSWORD --test-mode=true --snmp-monitor=true --snmp-user=$SNMP_USER --snmp-pass=$SNMP_PASS --snmp-target=$SNMP_TARGET --snmp-community=$SNMP_COMMUNITY --location-label=$LABLE --mon-address=$IP >> $DEVOPS_LOG_FILE 2>&1 &
+
+    sleep 30
+
+    info "Post prometheus-peer.npool.top..." >> $DEVOPS_LOG_FILE
+    ALL_PROXY= curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure
+    echo curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure >> $DEVOPS_LOG_FILE
   fi
 }
 
+function install_federate_prometheus() {
+  if [ "$IDC" == "" ]; then
+    mv /prometheus.yml $prodir/
+     
+  fi
+} 
 
 install_prometheus_service
 install_idc_devops
-
-info "sleep..." >> $DEVOPS_LOG_FILE
-sleep 30
-
-info "Post prometheus-peer.npool.top..." >> $PRO_LOG_FILE
-ALL_PROXY= curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure
-echo curl https://$ETCD_REGISTER/api/v0/service/register -X POST -d "{\"UserName\":\"$USERNAME\", \"Password\":\"$PASSWORD\", \"DomainName\":\"prometheus-peer.npool.top\", \"IP\":\"$PUBLIC_IP\", \"Port\":\"$PUBLIC_PORT\"}" --header "Content-Type: application/json" -H "Host:etcd-register.npool.top" --insecure >> $PRO_LOG_FILE
+install_federate_prometheus
 
 info "Run prometheus..." >> $PRO_LOG_FILE
 $prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1

@@ -1,0 +1,36 @@
+global:
+  scrape_interval:      3m
+  scrape_timeout:       3m
+  evaluation_interval:  3m
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+#      - 106.14.125.55:9093
+
+rule_files:
+  - "rules/*"
+
+scrape_configs:
+  - job_name: 'federate'
+    scrape_interval: 2m
+
+    honor_labels: true
+    metrics_path: '/federate'
+
+    params:
+      'match[]':
+        - '{job="prometheus"}'
+        - '{job="fullminer"}'
+        - '{job="fullnode"}'
+        - '{job="miner"}'
+        - '{job="storage"}'
+        - '{job="worker"}'
+        - '{__name__=~"job:.*"}'
+
+    static_configs:
+      - targets:
+        - 47.99.107.242:9090
+        - 106.74.7.5:9999
+
