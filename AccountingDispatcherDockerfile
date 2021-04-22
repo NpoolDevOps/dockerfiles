@@ -1,0 +1,16 @@
+FROM centos
+
+COPY ./bootstrap.sh /bootstrap.sh
+COPY ./accounting-dispatcher-bootstrap.sh /accounting-dispatcher-bootstrap.sh
+
+RUN yum install go -y
+
+ARG PORT
+ENV PORT=$PORT
+
+EXPOSE $PORT
+
+ARG ALL_PROXY
+ENV ALL_PROXY=$ALL_PROXY
+
+ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/accounting-dispatcher-bootstrap.sh", "--role", "dispatcher.npool.top", "--rev", "master", "--config", "accounting-dispatcher.conf", "--repo", "https://github.com/NpoolAccounting/accounting-dispatcher.git"]
