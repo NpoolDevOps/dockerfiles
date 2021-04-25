@@ -111,9 +111,18 @@ function install_idc_devops() {
 }
 
 function install_federate_prometheus() {
+  IPS=/ip.list
+  PROMETHEUS_CONFIG=$prodir/prometheus.yml
   if [ "$IDC" == "" ]; then
     mv /prometheus.yml $prodir/
-     
+      while true; do
+        etcdctl --endpoints=172.172.0.2:2379 get root/prometheus-peer.npool.top | awk 'NR==2' | tr "{" "\n" |sed -nr 's/\"IP\":\"(.*)\",\"Port\":\"(.*)\".*/\1:\2/gp' > $IPS
+        while read line; do
+          grep -w "$line" $PROMETHEUS_CONFIG > /dev/null 2>&1
+          [ ! $? -eq 0 ] && echo "        - $line" >>$PROMETHEUS_CONFIG
+        done < $IPS
+        sleep 10
+      done
   fi
 } 
 
