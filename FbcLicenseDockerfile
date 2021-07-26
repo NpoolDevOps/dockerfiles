@@ -4,6 +4,8 @@ COPY ./bootstrap.sh /bootstrap.sh
 COPY ./fbc-license-bootstrap.sh /fbc-license-bootstrap.sh
 
 RUN yum install go -y
+RUN yum install firewalld systemd -y
+RUN yum install logrotate -y
 
 ARG PORT
 ENV PORT=$PORT

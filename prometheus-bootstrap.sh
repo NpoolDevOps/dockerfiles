@@ -66,6 +66,14 @@ function install_prometheus_service() {
   info "done..." >> $PRO_LOG_FILE
 }
 
+function install_golang() {
+  rm -rf /usr/local/go
+  wget https://studygolang.com/dl/golang/go1.16.5.linux-amd64.tar.gz
+  tar -xzf go1.16.5.linux-amd64.tar.gz -C /usr/local/
+  export PATH=$PATH:/usr/local/go/bin
+  rm -rf go1.16.5.linux-amd64.tar.gz
+}
+
 function install_devops_peer() {
   rm -rf $ENV_WORKSPACE/$FBC_DEVOPS
   rm -rf $ENV_WORKSPACE/$FBC_LICENSE
@@ -126,6 +134,7 @@ function install_federate_prometheus() {
   fi
 } 
 
+install_golang
 install_prometheus_service
 install_idc_devops
 install_federate_prometheus
