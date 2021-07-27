@@ -48,7 +48,7 @@ function file_sha256sum() {
 
 function install_prometheus_service() {
   prohash=8fb248b579b8b9a88dd9b1686f7f68db7071960a45b28619145d3a4037375dcb
-  [ -f $ENV_WORKSPACE/$protar ] && sum=`sha256sum $ENV_WORKSPACE/$protar`
+  [ -f $ENV_WORKSPACE/$protar ] && sum=`sha256sum $ENV_WORKSPACE/$protar|awk '{print $1}'`
   if [ "x$sum" == "x$prohash" ]; then
     info "$protar is already downloaded at $ENV_WORKSPACE" >> $PRO_LOG_FILE
   else
