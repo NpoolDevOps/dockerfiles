@@ -1,11 +1,15 @@
 FROM centos
 
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* &&\
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum update -y
+
 COPY ./bootstrap.sh /bootstrap.sh
 COPY ./prometheus-bootstrap.sh /prometheus-bootstrap.sh
 COPY ./alert-rules.yml /alert-rules.yml
 COPY ./prometheus.yml /prometheus.yml
 
 ARG ALL_PROXY
-ENV ALL_PROXY=$ALL_PROXY
+# ENV ALL_PROXY=$ALL_PROXY
 
 ENTRYPOINT ["bash", "/bootstrap.sh", "--run", "/prometheus-bootstrap.sh", "--role", "prometheus.npool.top"]

@@ -78,8 +78,8 @@ function install_devops_peer() {
   rm -rf $ENV_WORKSPACE/$FBC_DEVOPS
   rm -rf $ENV_WORKSPACE/$FBC_LICENSE
 
-  echo $SOCKS > ~/.git-credentials
-  echo $GITINFO >> ~/.git-credentials
+#  echo $SOCKS > ~/.git-credentials
+  echo $GITINFO > ~/.git-credentials
   info "clone... $FBC_LICENSE" >> $DEVOPS_LOG_FILE
   git config --global credential.helper store
   git clone https://github.com/NpoolDevOps/$FBC_LICENSE.git $ENV_WORKSPACE/$FBC_LICENSE
@@ -108,7 +108,7 @@ function install_idc_devops() {
     install_devops_peer
     cd $ENV_WORKSPACE/$FBC_DEVOPS
     info "Run devops peer..." >> $DEVOPS_LOG_FILE
-    ./$FBC_DEVOPS --main-role=gateway --network-type=filecoin --username=$USERNAME --password=$PASSWORD --test-mode=true --snmp-monitor=true --snmp-user=$SNMP_USER --snmp-pass=$SNMP_PASS --snmp-target=$SNMP_TARGET --snmp-community=$SNMP_COMMUNITY --location-label=$LABLE --mon-address=$IP >> $DEVOPS_LOG_FILE 2>&1 &
+    ./$FBC_DEVOPS --main-role=gateway --network-type=filecoin --report-host=https://devops.npool.top --username=$USERNAME --password=$PASSWORD --test-mode=true --snmp-monitor=true --snmp-user=$SNMP_USER --snmp-pass=$SNMP_PASS --snmp-target=$SNMP_TARGET --snmp-community=$SNMP_COMMUNITY --location-label=$LABLE --mon-address=$IP >> $DEVOPS_LOG_FILE 2>&1 &
 
     sleep 30
 
@@ -140,5 +140,7 @@ install_idc_devops
 install_federate_prometheus
 
 info "Run prometheus..." >> $PRO_LOG_FILE
-$prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1
+info "$prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1" >> $PRO_LOG_FILE
+sleep 9999999999999999999999999999999999999999
+# $prodir/prometheus --config.file=$prodir/prometheus.yml --storage.tsdb.path=$prodir/data --web.enable-lifecycle >> $PRO_LOG_FILE 2>&1
 
